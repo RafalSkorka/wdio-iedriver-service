@@ -1,0 +1,36 @@
+{
+  "name": "wdio-iedriver-service",
+  "version": "1.0.0",
+  "description": "WebdriverIO service to start & stop IEDriver",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "wdio run wdio.conf.js",
+    "prepare-test": "node node_modules/require-self/bin/require-self"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RafalSkorka/wdio-iedriver-service.git"
+  },
+  "keywords": [
+    "wdio",
+    "iedriver"
+  ],
+  "author": "Rafal Skorka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/RafalSkorka/wdio-iedriver-service/issues"
+  },
+  "homepage": "https://github.com/RafalSkorka/wdio-iedriver-service#readme",
+  "devDependencies": {
+    "@wdio/cli": "^6.1.17",
+    "@wdio/local-runner": "^6.1.17",
+    "@wdio/mocha-framework": "^6.1.17",
+    "@wdio/spec-reporter": "^6.1.14",
+    "@wdio/sync": "^6.1.14",
+    "require-self": "^0.2.3"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1",
+    "get-port": "^5.1.1"
+  }
+}
