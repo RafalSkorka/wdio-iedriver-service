@@ -21,7 +21,7 @@ function getFilePath(filePath, defaultFilename) {
 
 exports.default = class IEService {
     constructor() {
-        this.path = './bin/IEDriverServer.exe';
+        this.path = path.join(__dirname, '../bin/IEDriverServer.exe');
         this.ieDriverLogs = null;
         this.ieDriverArgs = null;
         return this;
