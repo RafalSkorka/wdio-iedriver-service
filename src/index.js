@@ -20,13 +20,6 @@ function getFilePath(filePath, defaultFilename) {
 }
 
 exports.default = class IEService {
-    constructor() {
-        this.path = path.join(__dirname, '../bin/IEDriverServer.exe');
-        this.ieDriverLogs = null;
-        this.ieDriverArgs = null;
-        return this;
-    }
-
     async onPrepare(config, capabilities) {
         if (config.ieDriverPersistent) {
             await this._startIEDriver(config);
@@ -54,24 +47,27 @@ exports.default = class IEService {
     }
 
     async _startIEDriver(config) {
-        this.ieDriverArgs = config.ieDriverArgs || [];
-        this.ieDriverLogs = config.ieDriverLogs;
+        let ieDriverArgs = config.ieDriverArgs || [];
+        let ieDriverLogs = config.ieDriverLogs;
 
-        if (!this.ieDriverArgs.find(arg => arg.startsWith('/log-level')) && config.logLevel) {
-            this.ieDriverArgs.push(`/log-level=${config.logLevel}`);
+        if (!ieDriverArgs.find(arg => arg.startsWith('/log-level')) && config.logLevel) {
+            ieDriverArgs.push(`/log-level=${config.logLevel}`);
         }
 
         if (config.ieDriverRandomPort !== false) {
             config.port = await getPort();
         }
 
-        this.ieDriverArgs.push(`/port=${config.port}`);
+        ieDriverArgs.push(`/port=${config.port}`);
 
-        this.process = require('child_process').execFile(this.path, this.ieDriverArgs);
-
-        if (typeof this.ieDriverLogs === 'string') {
-            this._redirectLogStream(config.port);
+        if (typeof ieDriverLogs === 'string') {
+            const DEFAULT_LOG_FILENAME = `IEDriver-${config.port}.txt`;
+            const logFile = getFilePath(ieDriverLogs, DEFAULT_LOG_FILENAME);
+            fs.ensureFileSync(logFile);
+            ieDriverArgs.push(`/log-file="${logFile}"`);
         }
+        const serverPath = path.join(__dirname, '../bin/IEDriverServer.exe');
+        this.process = require('child_process').execFile(serverPath, ieDriverArgs);
     }
 
     _stopIEDriver() {
@@ -80,19 +76,6 @@ exports.default = class IEService {
             this.process = null;
         }
     }
-
-    _redirectLogStream(port) {
-        const DEFAULT_LOG_FILENAME = `IEDriver-${port}.txt`;
-        const logFile = getFilePath(this.ieDriverLogs, DEFAULT_LOG_FILENAME);
-
-        // ensure file & directory exists
-        fs.ensureFileSync(logFile);
-
-        const logStream = fs.createWriteStream(logFile, { flags: 'w' });
-        this.process.stdout.pipe(logStream);
-        this.process.stderr.pipe(logStream);
-    }
-
 }
 
 exports.launcher = exports.default
