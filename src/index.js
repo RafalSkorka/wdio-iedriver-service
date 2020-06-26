@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs-extra');
 const getPort = require('get-port');
+const psList = require('ps-list');
 
 /**
  * Resolves the given path into a absolute path and appends the default filename as fallback when the provided path is a directory.
@@ -31,8 +32,8 @@ exports.default = class IEService {
         }
     }
 
-    onComplete() {
-        this._stopIEDriver();
+    async onComplete() {
+        await this._stopIEDriver();
     }
 
     async beforeSession(config) {
@@ -42,8 +43,8 @@ exports.default = class IEService {
         await this._startIEDriver(config);
     }
 
-    afterSession() {
-        this._stopIEDriver();
+    async afterSession() {
+        await this._stopIEDriver();
     }
 
     async _startIEDriver(config) {
@@ -70,10 +71,12 @@ exports.default = class IEService {
         this.process = require('child_process').execFile(serverPath, ieDriverArgs);
     }
 
-    _stopIEDriver() {
+    async _stopIEDriver() {
         if (this.process) {
             this.process.kill();
             this.process = null;
+            const processes = await psList();
+            processes.filter(p => p.name === 'iexplore.exe').forEach(p => process.kill(p.pid));
         }
     }
 }
