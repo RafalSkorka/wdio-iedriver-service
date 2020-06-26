@@ -74,7 +74,7 @@ export.config = {
     // OPTIONAL: Location of iedriver logs.
     // Must be a directory if using maxInstances > 1.
     // Could be a file name or a directory if maxInstances == 1.
-    // Logs are saved as `IEDriver-{portname}.txt`
+    // Logs are saved as `IEDriver-{portname}.log`
     // Logs are not stored if this option is not set.
     // Default: not set
     ieDriverLogs: './',

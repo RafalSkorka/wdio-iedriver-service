@@ -62,7 +62,7 @@ exports.default = class IEService {
         ieDriverArgs.push(`/port=${config.port}`);
 
         if (typeof ieDriverLogs === 'string') {
-            const DEFAULT_LOG_FILENAME = `IEDriver-${config.port}.txt`;
+            const DEFAULT_LOG_FILENAME = `IEDriver-${config.port}.log`;
             const logFile = getFilePath(ieDriverLogs, DEFAULT_LOG_FILENAME);
             fs.ensureFileSync(logFile);
             ieDriverArgs.push(`/log-file="${logFile}"`);
