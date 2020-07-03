@@ -72,7 +72,7 @@ exports.default = class IEService {
             const DEFAULT_LOG_FILENAME = `IEDriver-${config.port}.log`;
             const logFile = getFilePath(ieDriverLogs, DEFAULT_LOG_FILENAME);
             fs.ensureFileSync(logFile);
-            ieDriverArgs.push(`/log-file="${logFile}"`);
+            ieDriverArgs.push(`/log-file=${logFile}`);
         }
         const serverPath = path.join(__dirname, '../bin/IEDriverServer.exe');
         this.process = require('child_process').execFile(serverPath, ieDriverArgs);

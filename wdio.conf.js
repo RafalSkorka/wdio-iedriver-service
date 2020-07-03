@@ -21,7 +21,7 @@ exports.config = {
     // ieDriverRandomPort: false,
     // port: 5555,
     ieDriverArgs: ['/log-level=DEBUG'],
-    ieDriverLogs: './',
+    ieDriverLogs: './logs',
 
     framework: 'mocha',
     mochaOpts: {
