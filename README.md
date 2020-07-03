@@ -8,8 +8,8 @@ Note - this service is targeted at WDIO v6.
 This service helps you to run IEDriver seamlessly when running tests with the
 [WDIO testrunner](https://webdriver.io/docs/gettingstarted.html).
 
-Note - this service does not require a Selenium server, but uses IEDriverServer.exe to communicate with the browser directly.
-It uses a custom built binary for IE as the one from Selenium expects case-sensitive Content-Length header
+Note - this service does not require a Selenium server, but uses IEDriverServer.exe to communicate with the browser
+directly. It uses a custom built binary for IE as the one from Selenium expects case-sensitive Content-Length header
 and node makes them all lowercase. See here: https://github.com/SeleniumHQ/selenium/issues/7986
 The only change made was using `stricmp` instead of `strcmp` when comparing Content-Length header.
 
@@ -30,31 +30,18 @@ capabilities: [{
 
 ## Installation
 
-The easiest way is to keep `wdio-iedriver-service` as a devDependency in your `package.json`.
-
-```json
-{
-  "devDependencies": {
-    "wdio-iedriver-service": "git+https://github.com/RafalSkorka/wdio-iedriver-service.git"
-  }
-}
-```
-
-You can simple do it by:
-
 ```bash
 npm install wdio-iedriver-service --save-dev
 ```
 
 ## Configuration
 
-By design, only Internet Explorer is available. In order to use the service you need to
-add `iedriver` to your service array:
+By design, only Internet Explorer is available. In order to use the service you need to add `iedriver` to your
+service array:
 
 ```js
 // wdio.conf.js
 export.config = {
-
     // MANDATORY: Add iedriver to service array.
     // Default: empty array
     services: ['iedriver'],
@@ -89,8 +76,6 @@ export.config = {
     // Set it to false to use the `port` config option.
     // Default: true
     ieDriverRandomPort: true,
-
-  // ...
 };
 ```
 
