@@ -30,7 +30,7 @@ exports.default = class IEService {
         }
     }
 
-    async onComplete(config) {
+    async onComplete(exitCode, config) {
         if (config.ieDriverPersistent) {
             await this._stopDriver();
         }
