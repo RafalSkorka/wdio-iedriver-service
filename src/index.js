@@ -1,5 +1,5 @@
-const path = require('path');
 const fs = require('fs-extra');
+const path = require('path');
 const getPort = require('get-port');
 const psList = require('ps-list');
 
@@ -12,8 +12,6 @@ const psList = require('ps-list');
 function getFilePath(filePath, defaultFilename) {
     const FILE_EXTENSION_REGEX = /\.[0-9a-z]+$/i;
     let absolutePath = path.resolve(filePath);
-    // test if we already have a file (e.g. selenium.txt, .log, log.txt, etc.)
-    // NOTE: path.extname doesn't work to detect a file, cause dotfiles are reported by node to have no extension
     if (!FILE_EXTENSION_REGEX.test(path.basename(absolutePath))) {
         absolutePath = path.join(absolutePath, defaultFilename);
     }
@@ -32,19 +30,28 @@ exports.default = class IEService {
         }
     }
 
-    async onComplete() {
-        await this._stopIEDriver();
+    async onComplete(config) {
+        if (config.ieDriverPersistent) {
+            await this._stopIEDriver();
+        }
+        const processes = await psList();
+        processes
+            .filter(p => p.name === 'iexplore.exe')
+            .forEach(p => {
+                process.kill(p.pid);
+            });
     }
 
     async beforeSession(config) {
-        if (config.ieDriverPersistent) {
-            return;
+        if (!config.ieDriverPersistent) {
+            await this._startIEDriver(config);
         }
-        await this._startIEDriver(config);
     }
 
-    async afterSession() {
-        await this._stopIEDriver();
+    async afterSession(config) {
+        if (!config.ieDriverPersistent) {
+            await this._stopIEDriver();
+        }
     }
 
     async _startIEDriver(config) {
@@ -73,10 +80,14 @@ exports.default = class IEService {
 
     async _stopIEDriver() {
         if (this.process) {
+            const processes = await psList();
+            processes
+                .filter(p => p.name === 'iexplore.exe' && p.ppid === this.process.pid)
+                .forEach(p => {
+                    process.kill(p.pid);
+                });
             this.process.kill();
             this.process = null;
-            const processes = await psList();
-            processes.filter(p => p.name === 'iexplore.exe').forEach(p => process.kill(p.pid));
         }
     }
 }

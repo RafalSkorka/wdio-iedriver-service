@@ -81,7 +81,6 @@ export.config = {
 
     // OPTIONAL: Launch iedriver once for all specs if true.
     // Launch iedriver for each spec separately if false.
-    // Must be set to false if maxInstances > 1.
     // Default: false
     ieDriverPersistent: false,
 

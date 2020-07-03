@@ -4,7 +4,7 @@ exports.config = {
         './test/specs/**/*.js'
     ],
     capabilities: [{
-        maxInstances: 1,
+        maxInstances: 2,
         browserName: 'internet explorer',
         "se:ieOptions": {
             ignoreZoomSetting: true,
@@ -15,8 +15,11 @@ exports.config = {
     }],
     logLevel: 'warn',
     services: ['iedriver'],
-    ieDriverPersistent: false,
-    ieDriverRandomPort: true,
+    connectionRetryTimeout: 30000,
+    connectionRetryCount: 0,
+    // ieDriverPersistent: true,
+    // ieDriverRandomPort: false,
+    // port: 5555,
     ieDriverArgs: ['/log-level=DEBUG'],
     ieDriverLogs: './',
 
