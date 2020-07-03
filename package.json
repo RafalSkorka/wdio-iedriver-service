@@ -13,7 +13,10 @@
   },
   "keywords": [
     "wdio",
-    "iedriver"
+    "iedriver",
+    "webdriver",
+    "wdio-plugin",
+    "wdio-service"
   ],
   "author": "Rafal Skorka",
   "license": "MIT",
