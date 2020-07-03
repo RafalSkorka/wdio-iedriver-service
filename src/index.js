@@ -21,7 +21,7 @@ function getFilePath(filePath, defaultFilename) {
 exports.default = class IEService {
     async onPrepare(config, capabilities) {
         if (config.ieDriverPersistent) {
-            await this._startIEDriver(config);
+            await this._startDriver(config);
             capabilities.forEach(c => {
                 if (c.browserName.match(/internet explorer/i)) {
                     c.port = config.port;
@@ -32,7 +32,7 @@ exports.default = class IEService {
 
     async onComplete(config) {
         if (config.ieDriverPersistent) {
-            await this._stopIEDriver();
+            await this._stopDriver();
         }
         const processes = await psList();
         processes
@@ -44,17 +44,17 @@ exports.default = class IEService {
 
     async beforeSession(config) {
         if (!config.ieDriverPersistent) {
-            await this._startIEDriver(config);
+            await this._startDriver(config);
         }
     }
 
     async afterSession(config) {
         if (!config.ieDriverPersistent) {
-            await this._stopIEDriver();
+            await this._stopDriver();
         }
     }
 
-    async _startIEDriver(config) {
+    async _startDriver(config) {
         let ieDriverArgs = config.ieDriverArgs || [];
         let ieDriverLogs = config.ieDriverLogs;
 
@@ -78,7 +78,7 @@ exports.default = class IEService {
         this.process = require('child_process').execFile(serverPath, ieDriverArgs);
     }
 
-    async _stopIEDriver() {
+    async _stopDriver() {
         if (this.process) {
             const processes = await psList();
             processes
