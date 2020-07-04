@@ -31,7 +31,7 @@ capabilities: [{
 ## Installation
 
 ```bash
-npm install @RafalSkorka/wdio-iedriver-service --save-dev
+npm install wdio-iexplorerdriver-service --save-dev
 ```
 
 ## Configuration

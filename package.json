@@ -1,5 +1,5 @@
 {
-  "name": "@RafalSkorka/wdio-iedriver-service",
+  "name": "wdio-iexplorerdriver-service",
   "version": "1.0.1",
   "description": "WebdriverIO service to start & stop IEDriver",
   "main": "src/index.js",
