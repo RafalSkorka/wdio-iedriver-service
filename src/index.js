@@ -38,7 +38,7 @@ exports.default = class IEService {
         processes
             .filter(p => p.name === 'iexplore.exe')
             .forEach(p => {
-                process.kill(p.pid);
+                try { process.kill(p.pid); } catch (e) { }
             });
     }
 
@@ -84,7 +84,7 @@ exports.default = class IEService {
             processes
                 .filter(p => p.name === 'iexplore.exe' && p.ppid === this.process.pid)
                 .forEach(p => {
-                    process.kill(p.pid);
+                    try { process.kill(p.pid); } catch (e) { }
                 });
             this.process.kill();
             this.process = null;

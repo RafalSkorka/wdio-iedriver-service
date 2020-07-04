@@ -36,15 +36,15 @@ npm install wdio-iexplorerdriver-service --save-dev
 
 ## Configuration
 
-By design, only Internet Explorer is available. In order to use the service you need to add `iedriver` to your
+By design, only Internet Explorer is available. In order to use the service you need to add `iexplorerdriver` to your
 service array:
 
 ```js
 // wdio.conf.js
 export.config = {
-    // MANDATORY: Add iedriver to service array.
+    // MANDATORY: Add iexplorerdriver to service array.
     // Default: empty array
-    services: ['iedriver'],
+    services: ['iexplorerdriver'],
 
     // OPTIONAL: Provide custom port for iedriver.
     // ieDriverRandomPort must be set to false to use this port and maxInstances must be set to 1.
