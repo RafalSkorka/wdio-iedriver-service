@@ -1,6 +1,6 @@
 {
   "name": "wdio-iexplorerdriver-service",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "WebdriverIO service to start & stop IEDriver",
   "main": "src/index.js",
   "scripts": {
